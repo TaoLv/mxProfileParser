@@ -26,7 +26,7 @@ def print_all(cnt, dur, iters=0):
     maxcall = max([len(str(v)) for v in cnt.values()])
 
     for i in range(len(cnt)):
-        name = cnt.keys()[i]
+        name = list(cnt.keys())[i]
         if iters != 0:
             assert cnt[name] % iters == 0
             str1 = ('%%-%ds' % maxname) % name
