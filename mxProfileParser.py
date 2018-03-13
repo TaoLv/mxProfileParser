@@ -93,7 +93,8 @@ def init_table(events):
     dur = {}
     for i in range(len(events)):
         if events[i]['name'] != 'process_name' and \
-           events[i]['name'] not in ops:
+           events[i]['name'] not in ops and \
+           events[i]['cat'] == 'operator':
             ops.append(str(events[i]['name']))
             if events[i]['name'] not in cnt.keys():
                 cnt.update({events[i]['name']: 0})
