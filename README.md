@@ -1,5 +1,11 @@
 # mxProfileParser
 A simple tool for parsing the profile.json file of mxnet
+### Enable mxnet profiler with environment variables
+```
+export MXNET_EXEC_BULK_EXEC_INFERENCE=0
+export MXNET_EXEC_BULK_EXEC_TRAIN=0
+export MXNET_PROFILER_AUTOSTART=1
+```
 ### Specify the json file. The tool will load `profile.json` by default
 ```
 $ python mxProfileParser.py --file demo.json
