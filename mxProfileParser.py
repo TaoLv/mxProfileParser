@@ -33,8 +33,18 @@ def print_all(cnt, dur, iters=0):
     maxpercall = max([len(str(dur[v] / 1000.0 / cnt[v])) for v in dur.keys()])
     maxcall = max([len(str(v)) for v in cnt.values()])
 
+    sorted_dur = sorted(dur.items(), key=lambda kv: kv[1], reverse=True)
+
+    '''
+    if iters != 0:
+        print('%s  %s \t%s \t%s \t%s' % (str1, str2, str3, str4, str5))
+    else:
+        print('%s  %s \t%s \t%s' % (str1, str2, str3, str4))
+    '''
+        
     for i in range(len(cnt)):
-        name = list(cnt.keys())[i]
+        #name = list(cnt.keys())[i]
+        name = sorted_dur[i][0]
         if iters != 0:
             assert cnt[name] % iters == 0
             str1 = ('%%-%ds' % maxname) % name
