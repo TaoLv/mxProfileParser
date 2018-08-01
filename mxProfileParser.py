@@ -33,8 +33,11 @@ def print_all(cnt, dur, iters=0):
     maxpercall = max([len(str(dur[v] / 1000.0 / cnt[v])) for v in dur.keys()])
     maxcall = max([len(str(v)) for v in cnt.values()])
 
+    sorted_dur = sorted(dur.items(), key=lambda kv: kv[1], reverse=True)
+
+    total_time = sum(dur.values())
     for i in range(len(cnt)):
-        name = list(cnt.keys())[i]
+        name = sorted_dur[i][0]
         if iters != 0:
             assert cnt[name] % iters == 0
             str1 = ('%%-%ds' % maxname) % name
@@ -43,16 +46,18 @@ def print_all(cnt, dur, iters=0):
                 (dur[name] / 1000.0 / cnt[name])
             str4 = ('%%-%ds calls' % maxcall) % cnt[name]
             str5 = '%-4s calls/iter' % (cnt[name] / iters)
-            print('%s  %s \t%s \t%s \t%s' % (str1, str2, str3, str4, str5))
+            str6 = ('{0:.2f} %'.format(100.0 * dur[name]/total_time))
+            print('%s  %s \t%s \t%s \t%s \t%s' % (str1, str2, str3, str4, str5, str6))
         else:
             str1 = ('%%-%ds' % maxname) % name
             str2 = ('%%-%ds ms' % maxtotal) % (dur[name] / 1000.0)
             str3 = ('%%-%ds ms/call' % maxpercall) % \
                 (dur[name] / 1000.0 / cnt[name])
             str4 = ('%%-%ds calls' % maxcall) % cnt[name]
-            print('%s  %s \t%s \t%s' % (str1, str2, str3, str4))
+            str5 = ('{0:.2f} %'.format(100.0 * dur[name]/total_time))
+            print('%s  %s \t%s \t%s \t%s' % (str1, str2, str3, str4, str5))
 
-    print('\nTotal OP Time: %.8f ms' % (sum(dur.values()) / 1000.0))
+    print('\nTotal OP Time: %.8f ms' % (total_time / 1000.0))
     if iters != 0:
         print('Iteration Time: %.8f ms\n' %
               (sum(dur.values()) / 1000.0 / iters))
@@ -66,6 +71,7 @@ def print_op(op, cnt, dur, iters=0):
     maxpercall = max([len(str(dur[v] / 1000.0 / cnt[v])) for v in dur.keys()])
     maxcall = max([len(str(v)) for v in cnt.values()])
 
+    total_time = sum(dur.values())
     for i in range(len(cnt)):
         name = list(cnt.keys())[i]
         if op in name:
@@ -77,14 +83,16 @@ def print_op(op, cnt, dur, iters=0):
                     (dur[name] / 1000.0 / cnt[name])
                 str4 = ('%%-%ds calls' % maxcall) % cnt[name]
                 str5 = '%-4s calls/iter' % (cnt[name] / iters)
-                print('%s  %s \t%s \t%s \t%s' % (str1, str2, str3, str4, str5))
+                str6 = ('{0:.2f} %'.format(100.0 * dur[name]/total_time))
+                print('%s  %s \t%s \t%s \t%s \t%s' % (str1, str2, str3, str4, str5, str6))
             else:
                 str1 = ('%%-%ds' % maxname) % name
                 str2 = ('%%-%ds ms' % maxtotal) % (dur[name] / 1000.0)
                 str3 = ('%%-%ds ms/call' % maxpercall) % \
                     (dur[name] / 1000.0 / cnt[name])
                 str4 = ('%%-%ds calls' % maxcall) % cnt[name]
-                print('%s  %s \t%s \t%s' % (str1, str2, str3, str4))
+                str5 = ('{0:.2f} %'.format(100.0 * dur[name]/total_time))
+                print('%s  %s \t%s \t%s \t%s' % (str1, str2, str3, str4, str5))
 
 
 def init_table(events):
