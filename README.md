@@ -10,39 +10,39 @@ export MXNET_PROFILER_AUTOSTART=1
 ```
 $ python mxProfileParser.py --file demo.json
 Time of each OP:
-_copy           2855.707  ms    27.1972095238   ms/call         105  calls
-Convolution     29936.515 ms    3.03308156028   ms/call         9870 calls
-Pooling         4265.345  ms    2.9015952381    ms/call         1470 calls
-SoftmaxOutput   8.093     ms    0.0770761904762 ms/call         105  calls
-Activation      6724.473  ms    0.681304255319  ms/call         9870 calls
-BatchNorm       10322.554 ms    1.0458514691    ms/call         9870 calls
-FullyConnected  253.268   ms    2.41207619048   ms/call         105  calls
-Concat          3792.917  ms    3.28391082251   ms/call         1155 calls
-Flatten         36.932    ms    0.351733333333  ms/call         105  calls
+Convolution     10563.795 ms    13.2877924528  ms/call  795 calls       58.63 %
+elemwise_add    3119.924  ms    12.9996833333  ms/call  240 calls       17.32 %
+BatchNorm       2406.835  ms    3.14618954248  ms/call  765 calls       13.36 %
+Activation      1383.968  ms    1.84529066667  ms/call  750 calls       7.68 %
+FullyConnected  200.596   ms    13.3730666667  ms/call  15  calls       1.11 %
+_copy           198.52    ms    13.2346666667  ms/call  15  calls       1.10 %
+Pooling         136.808   ms    4.56026666667  ms/call  30  calls       0.76 %
+Flatten         4.969     ms    0.331266666667 ms/call  15  calls       0.03 %
+SoftmaxOutput   1.724     ms    0.114933333333 ms/call  15  calls       0.01 %
 
-Total OP Time: 58195.80400000 ms
+Total OP Time: 18017.13900000 ms
 ```
 ### Specify the operator name which you want to parse.
 ```
 $ python mxProfileParser.py --file demo.json --op BatchNorm
 Time of BatchNorm:
-BatchNorm       10322.554 ms    1.0458514691    ms/call         9870 calls
+BatchNorm       2406.835  ms    3.14618954248  ms/call  765 calls       13.36 %
 ```
 ### Specify the # of iteration if you know the exact number
 ```
-$ python mxProfileParser.py --file demo.json --iterations 105
+$ python mxProfileParser.py --file demo.json --iterations 15
 Time of each OP:
-_copy           2855.707  ms    27.1972095238   ms/call         105  calls      1    calls/iter
-Convolution     29936.515 ms    3.03308156028   ms/call         9870 calls      94   calls/iter
-Pooling         4265.345  ms    2.9015952381    ms/call         1470 calls      14   calls/iter
-SoftmaxOutput   8.093     ms    0.0770761904762 ms/call         105  calls      1    calls/iter
-Activation      6724.473  ms    0.681304255319  ms/call         9870 calls      94   calls/iter
-BatchNorm       10322.554 ms    1.0458514691    ms/call         9870 calls      94   calls/iter
-FullyConnected  253.268   ms    2.41207619048   ms/call         105  calls      1    calls/iter
-Concat          3792.917  ms    3.28391082251   ms/call         1155 calls      11   calls/iter
-Flatten         36.932    ms    0.351733333333  ms/call         105  calls      1    calls/iter
+Convolution     10563.795 ms    13.2877924528  ms/call  795 calls       53   calls/iter         58.63 %
+elemwise_add    3119.924  ms    12.9996833333  ms/call  240 calls       16   calls/iter         17.32 %
+BatchNorm       2406.835  ms    3.14618954248  ms/call  765 calls       51   calls/iter         13.36 %
+Activation      1383.968  ms    1.84529066667  ms/call  750 calls       50   calls/iter         7.68 %
+FullyConnected  200.596   ms    13.3730666667  ms/call  15  calls       1    calls/iter         1.11 %
+_copy           198.52    ms    13.2346666667  ms/call  15  calls       1    calls/iter         1.10 %
+Pooling         136.808   ms    4.56026666667  ms/call  30  calls       2    calls/iter         0.76 %
+Flatten         4.969     ms    0.331266666667 ms/call  15  calls       1    calls/iter         0.03 %
+SoftmaxOutput   1.724     ms    0.114933333333 ms/call  15  calls       1    calls/iter         0.01 %
 
-Total OP Time: 58195.80400000 ms
-Iteration Time: 554.24575238 ms
+Total OP Time: 18017.13900000 ms
+Iteration Time: 1201.14260000 ms
 ```
   * First column are operator names. Second column are the total execution time of each operator. Third column are the average execution time of each operator. Third column are the number of calls of each operator. The last column are the number of calls in one iteration.
